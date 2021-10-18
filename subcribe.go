@@ -1,7 +1,6 @@
 package mqtt
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -11,7 +10,7 @@ import (
 func Subscribe(topic string, qos byte, callback mqtt.MessageHandler) {
 	if IsPersisten() {
 		if token := Global.MQTTClient.Subscribe(topic, 0, callback); token.Wait() && token.Error() != nil {
-			fmt.Println(token.Error())
+			log.Fatal(token.Error())
 			os.Exit(1)
 		}
 	} else {
