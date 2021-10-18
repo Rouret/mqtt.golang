@@ -1,7 +1,6 @@
 package mqtt
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -11,21 +10,29 @@ import (
 //Global variable
 var Global struct {
 	MQTTClient mqtt.Client
+	LibConfig LibConfiguration
 } 
+type LibConfiguration struct {
+	IsPersistent bool
+}
+
+func Setup(setup LibConfiguration){
+	Global.LibConfig = setup
+}
+
+func IsPersisten() bool{
+	return Global.LibConfig.IsPersistent;
+}
 
 func createClientOptions(brokerURI string, clientId string) *mqtt.ClientOptions {
 	opts := mqtt.NewClientOptions()
-	// AddBroker adds a broker URI to the list of brokers to be used.
-	// The format should be "scheme://host:port"
 	opts.AddBroker(brokerURI)
-	// opts.SetUsername(user)
-	// opts.SetPassword(password)
 	opts.SetClientID(clientId)
 	return opts
 }
 
 func Connect(brokerURI string, clientId string) mqtt.Client {
-	fmt.Println("Trying to connect (" + brokerURI + ", " + clientId + ")...")
+	log.Print("Trying to connect (" + brokerURI + ", " + clientId + ")...")
 	opts := createClientOptions(brokerURI, clientId)
 	client := mqtt.NewClient(opts)
 	token := client.Connect()
@@ -34,8 +41,9 @@ func Connect(brokerURI string, clientId string) mqtt.Client {
 	if err := token.Error(); err != nil {
 		log.Fatal(err)
 	}else{
-		Global.MQTTClient = client
-		client.Connect().Wait()
+		if(IsPersisten()){
+			Global.MQTTClient = client
+		}
 	}
 	
 	return client
