@@ -6,7 +6,7 @@ import (
 )
 
 func Send(topic string,qos int,message interface{},needToBeJson bool) {
-	if IsPersisten() {
+	if Global.LibConfig.IsPersistent {
 		if(needToBeJson){
 			jsonMessage, err := json.Marshal(message)
 			if(err != nil){
