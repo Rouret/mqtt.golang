@@ -17,7 +17,7 @@ func main() {
 	mqtt.Setup(mqtt.LibConfiguration{
 		IsPersistent: true,
 		BrokerUrl: "tcp://localhost",
-    	BrokerPort: 1883,
+    		BrokerPort: 1883,
 		ID: 999,
 	})
 }
@@ -51,7 +51,7 @@ func main() {
 	mqtt.Setup(mqtt.LibConfiguration{
 		IsPersistent: true,
 		BrokerUrl: "tcp://localhost",
-    	BrokerPort: 1883,
+    		BrokerPort: 1883,
 		ID: 999,
 	})
 
