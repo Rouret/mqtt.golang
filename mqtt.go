@@ -2,27 +2,12 @@ package mqtt
 
 import (
 	"log"
+	"strconv"
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
-//Global variable
-var Global struct {
-	MQTTClient mqtt.Client
-	LibConfig LibConfiguration
-} 
-type LibConfiguration struct {
-	IsPersistent bool
-}
-
-func Setup(setup LibConfiguration){
-	Global.LibConfig = setup
-}
-
-func IsPersisten() bool{
-	return Global.LibConfig.IsPersistent;
-}
 
 func createClientOptions(brokerURI string, clientId string) *mqtt.ClientOptions {
 	opts := mqtt.NewClientOptions()
@@ -31,9 +16,15 @@ func createClientOptions(brokerURI string, clientId string) *mqtt.ClientOptions 
 	return opts
 }
 
-func Connect(brokerURI string, clientId string) mqtt.Client {
-	log.Print("Trying to connect (" + brokerURI + ", " + clientId + ")...")
-	opts := createClientOptions(brokerURI, clientId)
+func Connect() mqtt.Client {
+
+	log.Println("TIPS: See setup method to config the mqtt connexion")
+	endPoint := Global.LibConfig.BrokerUrl+":"+strconv.Itoa(Global.LibConfig.BrokerPort)
+	clientId := strconv.Itoa(Global.LibConfig.ID)
+
+	log.Print("Trying to connect (" + endPoint + "," + clientId + ")...")
+
+	opts := createClientOptions(endPoint, clientId )
 	client := mqtt.NewClient(opts)
 	token := client.Connect()
 	for !token.WaitTimeout(3 * time.Second) {
@@ -41,10 +32,15 @@ func Connect(brokerURI string, clientId string) mqtt.Client {
 	if err := token.Error(); err != nil {
 		log.Fatal(err)
 	}else{
-		if(IsPersisten()){
+		if(Global.LibConfig.IsPersistent){
 			Global.MQTTClient = client
 		}
 	}
 	
 	return client
 }
+
+
+
+
+

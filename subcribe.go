@@ -8,7 +8,7 @@ import (
 )
 
 func Subscribe(topic string, qos byte, callback mqtt.MessageHandler) {
-	if IsPersisten() {
+	if Global.LibConfig.IsPersistent {
 		if token := Global.MQTTClient.Subscribe(topic, 0, callback); token.Wait() && token.Error() != nil {
 			log.Fatal(token.Error())
 			os.Exit(1)

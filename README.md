@@ -16,6 +16,9 @@ import "github.com/Rouret/mqtt.golang"
 func main() {
 	mqtt.Setup(mqtt.LibConfiguration{
 		IsPersistent: true,
+		BrokerUrl: "tcp://localhost",
+    	BrokerPort: 1883,
+		ID: 999,
 	})
 }
 ```
@@ -32,7 +35,7 @@ func main() {
 | Method name | Input  | Output | Description | Need to be persistent          
 | :--------------- |:---------------:| :---------------:| :---------------:| :---------------:|
 | Setup  | setup LibConfiguration | void | Setup | 
-| Connect  | brokerURI string, clientId string | mqtt.Client | Connect will create a connection to the message broker | 
+| Connect  | void | mqtt.Client | Connect will create a connection to the message broker | 
 | Send  | topic string, qos int, message interface{}, needToBeJson bool | void | [Publish will publish a message with the specified QoS and content to the specified topic.](https://github.com/eclipse/paho.mqtt.golang/blob/master/client.go) | X 
 | Subscribe  | topic string, qos byte, callback mqtt.MessageHandler | void | [Subscribe starts a new subscription. Provide a MessageHandler to be executed when a message is published on the topic provided, or nil for the default handler.](https://github.com/eclipse/paho.mqtt.golang/blob/master/client.go) | X  
 
@@ -47,6 +50,9 @@ func main() {
 
 	mqtt.Setup(mqtt.LibConfiguration{
 		IsPersistent: true,
+		BrokerUrl: "tcp://localhost",
+    	BrokerPort: 1883,
+		ID: 999,
 	})
 
 	//PERSITEN

@@ -6,14 +6,18 @@ func main() {
 
 	mqtt.Setup(mqtt.LibConfiguration{
 		IsPersistent: true,
+		BrokerUrl: "tcp://localhost",
+    	BrokerPort: 1883,
+		ID: 999,
 	})
 
+
 	//PERSITEN
-	mqtt.Connect("tcp://localhost:1883","123")
+	mqtt.Connect()
 	mqtt.Send("temp",1,"message",false)
 
 	//NO PERSITEN
-	client := mqtt.Connect("tcp://localhost:1883","123")
+	client := mqtt.Connect()
 	client.Publish("temp",1,false,"message")
 	client.Connect().Wait()
 }
