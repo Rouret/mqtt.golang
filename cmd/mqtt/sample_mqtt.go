@@ -17,7 +17,7 @@ func main() {
 	mqtt.Send("temp",1,"message",false)
 
 	//NO PERSITEN
-	client := mqtt.Connect()
-	client.Publish("temp",1,false,"message")
-	client.Connect().Wait()
+	// client := mqtt.Connect()
+	// client.Publish("temp",1,false,"message")
+	// client.Connect().Wait()
 }
