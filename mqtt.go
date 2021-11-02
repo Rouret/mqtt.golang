@@ -32,6 +32,7 @@ func Connect() mqtt.Client {
 	if err := token.Error(); err != nil {
 		log.Fatal(err)
 	}else{
+		log.Print("Connected !")
 		if(Global.LibConfig.IsPersistent){
 			Global.MQTTClient = client
 		}
