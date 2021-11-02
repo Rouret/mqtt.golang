@@ -56,11 +56,11 @@ func main() {
 	})
 
 	//PERSITEN
-	mqtt.Connect("tcp://localhost:1883","123")
+	mqtt.Connect()
 	mqtt.Send("temp",1,"message",false)
 
 	//NO PERSITEN
-	client := mqtt.Connect("tcp://localhost:1883","123")
+	client := mqtt.Connect()
 	client.Publish("temp",1,false,"message")
 	client.Connect().Wait()
 }
